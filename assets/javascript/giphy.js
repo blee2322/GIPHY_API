@@ -1,7 +1,5 @@
  $(document).ready(function(){
 
-
-  
   var topics = ["Call of Duty", "Resident Evil", "Halo", "Metal Gear Solid", "Overwatch"];
 
   function renderGameBtn() {
@@ -10,9 +8,9 @@
 
     for(var i = 0; i < topics.length; i++) {
       
-      var newgbtn = $("<button type=button>");
-      // newgbtn.addClass("vGame");
-      // newgbtn.attr("data-name", topics[i]);
+      var newgbtn = $("<button type=button class=btn btn-primary>");
+      newgbtn.addClass("vGame");
+      newgbtn.attr("data-game", topics[i]);
       
       //This will add the physical button to the page.
       newgbtn.text(topics[i]);

@@ -1,9 +1,14 @@
 .container{
   background-color: grey;
 }
-.buttons{
-  background-color: green;
-}
 .searchinput{
   background-color: red;
+}
+.btn{
+  background-color: blue;
+  color: white;
+  margin: 10px;
+}
+.form-control{
+  margin: 5px;
 }
