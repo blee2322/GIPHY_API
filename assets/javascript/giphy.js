@@ -1,6 +1,8 @@
- $(document).ready(function(){
+$(document).ready(function(){
 
   var topics = ["Call of Duty", "Resident Evil", "Halo", "Metal Gear Solid", "Overwatch"];
+
+    
 
   function renderGameBtn() {
 
@@ -16,47 +18,44 @@
       newgbtn.text(topics[i]);
       $("#gamebtn").append(newgbtn);
     }
+
+      $("#addGame").on("click", function(event) {
+        event.preventDefault();
+        var game = $("#game-input").val().trim();
+        topics.push(game);
+        renderGameBtn();
+      })
   }
 
-  $("#addGame").on("click", function(event) {
-    event.preventDefault();
-    var game = $("#game-input").val().trim();
-    topics.push(game);
     renderGameBtn();
-  })
+    
+    $("button").on("click", function(){
+      var gInput = $(this).attr("data-game");
+          
+          console.log(this);
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gInput + "&api_key=dc6zaTOxFJmzC&limit=10";
 
-  renderGameBtn();
+          $.ajax({
+            url:queryURL,
+            method:"GET"
+          })
+          .done(function(response) {
 
-  $("button").on("click", function() {
+            var output = response.data;
+            for(var j = 0; j < output.length; j++){
+              if (output[j].rating !== "r"){ 
 
-    var gInput = $(this).attr("data-game");
-    console.log(this);
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-        gInput + "&api_key=dc6zaTOxFJmzC&limit=10";
+                var gDiv = $("<div>");
+                var gmRating = output[j].rating;
+                var ptag = $("<p>").text("Rating: " + gmRating);
+                var gameImg = $("<img>");
 
-    $.ajax({
-      url:queryURL,
-      method:"GET"
+                gameImg.attr("src", output[j].images.fixed_height.url);
+                gDiv.append(ptag);
+                gDiv.append(gameImg);
+                $("#gifcont").prepend(gDiv);
+              }
+            }
+          })
     })
-    .done(function(response) {
-
-      var output = response.data;
-
-      for( var j = 0; j < output.length; j++) {
-
-        if(output[j].rating !== "r") {
-
-          var gDiv = $("<div>");
-          var gmRating = output[j].rating;
-          var ptag = $("<p>").text("Rating: " + gmRating);
-          var gameImg = $("<img>");
-
-          gameImg.attr("src", output[j].images.fixed_height.url);
-          gDiv.append(ptag);
-          gDiv.append(gameImg);
-          $("#gifcont").prepend(gDiv);
-        }
-      }
-    })
-  })
 });
