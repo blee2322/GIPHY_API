@@ -27,15 +27,38 @@ $(document).ready(function(){
             var ptag = $("<p>").text("Rating: " + gmRating);
             var gameImg = $("<img>");
 
-            gameImg.attr("src", output[j].images.fixed_height.url);
+            gameImg.attr("src", output[j].images.fixed_height_still.url);
+            gameImg.attr("data-still", output[j].images.fixed_height_still.url);
+            gameImg.attr("data-animate", output[j].images.fixed_height.url);
+            gameImg.attr("date-state", "still");
+            gameImg.addClass("gifsrc");
             gDiv.append(ptag);
             gDiv.append(gameImg);
-            $("#gifcont").prepend(gDiv);
+            $("#gifcont").prepend(gDiv)
+            gifstate();
           }
+          
         }
       })
     })
   }
+
+    function gifstate() {
+      
+      $(".gifsrc").on("click", function() {
+        
+        var state = $(this).attr("data-state");
+
+        if (state === "still") {
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state", "animate");
+        } else {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still");
+        }
+      })
+    }
+  
 
   function renderGameBtn() {
 
@@ -51,6 +74,7 @@ $(document).ready(function(){
       newgbtn.text(topics[i]);
       $("#gamebtn").append(newgbtn);
       showgame();
+      gifstate();
     }
   }
 
