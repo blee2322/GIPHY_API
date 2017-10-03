@@ -48,6 +48,7 @@ $(document).ready(function(){
       $(".gifsrc").on("click", function() {
         
         var state = $(this).attr("data-state");
+        console.log(this);
 
         if (state === "still") {
           $(this).attr("src", $(this).attr("data-animate"));
@@ -81,9 +82,12 @@ $(document).ready(function(){
       $("#addGame").on("click", function(event) {
         event.preventDefault();
         var game = $("#game-input").val().trim();
-        topics.push(game);
-        renderGameBtn();
-        $("#game-input").val("");
+        console.log(game)
+          if(game !== "") {
+            topics.push(game);
+            renderGameBtn();
+            $("#game-input").val("");
+          }
       })
 
       renderGameBtn();
